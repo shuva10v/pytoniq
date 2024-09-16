@@ -7,6 +7,7 @@ import random
 import pytest_asyncio
 
 from pytoniq import LiteClient
+from pytoniq_core import Slice, Address
 
 
 @pytest_asyncio.fixture
@@ -64,3 +65,14 @@ async def test_get_method(client: LiteClient):
     result2 = await client.run_get_method_local(address='EQBvW8Z5huBkMJYdnfAEM5JqTNkuWX3diqYENkWsIL0XggGG', method='seqno',
                                                 stack=[])
     assert result2 == result
+
+
+
+@pytest.mark.asyncio
+async def test_libraries(client: LiteClient):
+
+    result = await client.run_get_method(address='EQAmJs8wtwK93thF78iD76RQKf9Z3v2sxM57iwpZZtdQAiVM', method='get_wallet_data',
+                                         stack=[])
+    assert isinstance(result[1], Slice)
+    assert isinstance(result[2], Slice)
+    assert result[2].load_address() == Address("EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs")
