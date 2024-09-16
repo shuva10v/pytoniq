@@ -64,3 +64,12 @@ async def test_get_method(client: LiteClient):
     result2 = await client.run_get_method_local(address='EQBvW8Z5huBkMJYdnfAEM5JqTNkuWX3diqYENkWsIL0XggGG', method='seqno',
                                                 stack=[])
     assert result2 == result
+
+
+
+@pytest.mark.asyncio
+async def test_libraries(client: LiteClient):
+
+    result = await client.run_get_method(address='EQAmJs8wtwK93thF78iD76RQKf9Z3v2sxM57iwpZZtdQAiVM', method='get_wallet_data',
+                                         stack=[])
+    assert isinstance(result[1], int)
